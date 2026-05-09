@@ -1,36 +1,41 @@
 import { useState } from 'react';
+import { getGeminiReply } from '../services/geminiService';
 
 export default function useChat() {
-  const [message, setMessage] = useState('');
-
   const [messages, setMessages] = useState([
     {
+      role: 'ai',
       text: 'Hello 👋 I am Falcon AI',
-      isUser: false
-    }
+    },
   ]);
 
-  const sendMessage = () => {
-    if (!message.trim()) return;
+  const [loading, setLoading] = useState(false);
+
+  const sendMessage = async (text) => {
+    if (!text.trim()) return;
 
     const userMessage = {
-      text: message,
-      isUser: true
+      role: 'user',
+      text,
     };
+
+    setMessages((prev) => [...prev, userMessage]);
+    setLoading(true);
+
+    const reply = await getGeminiReply(text);
 
     const aiMessage = {
-      text: 'Falcon AI is thinking...',
-      isUser: false
+      role: 'ai',
+      text: reply,
     };
 
-    setMessages([...messages, userMessage, aiMessage]);
-    setMessage('');
+    setMessages((prev) => [...prev, aiMessage]);
+    setLoading(false);
   };
 
   return {
-    message,
-    setMessage,
     messages,
-    sendMessage
+    loading,
+    sendMessage,
   };
 }
