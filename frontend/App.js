@@ -1,22 +1,75 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, ScrollView } from 'react-native';
+import MessageBubble from './components/MessageBubble';
 
 export default function App() {
+  const [message, setMessage] = useState('');
+  const [messages, setMessages] = useState([
+    {
+      text: 'Hello 👋 I am Falcon AI',
+      isUser: false
+    }
+  ]);
+
+  const sendMessage = () => {
+    if (!message.trim()) return;
+
+    const userMessage = {
+      text: message,
+      isUser: true
+    };
+
+    const aiMessage = {
+      text: 'Falcon AI is thinking...',
+      isUser: false
+    };
+
+    setMessages([...messages, userMessage, aiMessage]);
+    setMessage('');
+  };
+
   return (
     <View style={{ flex: 1, backgroundColor: '#fff', paddingTop: 60 }}>
-      <Text style={{ fontSize: 28, fontWeight: 'bold', textAlign: 'center' }}>
+      <Text
+        style={{
+          fontSize: 28,
+          fontWeight: 'bold',
+          textAlign: 'center',
+          marginBottom: 10
+        }}
+      >
         Falcon AI
       </Text>
 
-      <ScrollView style={{ flex: 1, padding: 20 }}>
-        <View style={{ backgroundColor: '#f1f1f1', padding: 15, borderRadius: 15, marginBottom: 10 }}>
-          <Text>Hello 👋 I am Falcon AI</Text>
-        </View>
+      <ScrollView style={{ flex: 1, paddingHorizontal: 20 }}>
+        {messages.map((msg, index) => (
+          <MessageBubble
+            key={index}
+            message={msg.text}
+            isUser={msg.isUser}
+          />
+        ))}
       </ScrollView>
 
-      <View style={{ flexDirection: 'row', padding: 10, borderTopWidth: 1, borderColor: '#ddd' }}>
+      <View
+        style={{
+          flexDirection: 'row',
+          padding: 10,
+          borderTopWidth: 1,
+          borderColor: '#eee',
+          alignItems: 'center'
+        }}
+      >
+        <TouchableOpacity
+          style={{ marginRight: 10 }}
+        >
+          <Text style={{ fontSize: 24 }}>📎</Text>
+        </TouchableOpacity>
+
         <TextInput
           placeholder='Message Falcon AI...'
+          value={message}
+          onChangeText={setMessage}
           style={{
             flex: 1,
             backgroundColor: '#f1f1f1',
@@ -27,6 +80,13 @@ export default function App() {
         />
 
         <TouchableOpacity
+          style={{ marginLeft: 10 }}
+        >
+          <Text style={{ fontSize: 24 }}>🎤</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          onPress={sendMessage}
           style={{
             marginLeft: 10,
             backgroundColor: '#000',
