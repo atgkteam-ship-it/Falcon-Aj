@@ -1,19 +1,26 @@
 import React from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
 
 export default function TypingIndicator() {
   return (
-    <View
-      style={{
-        alignSelf: 'flex-start',
-        backgroundColor: '#f1f1f1',
-        padding: 14,
-        borderRadius: 16,
-        marginVertical: 6,
-        maxWidth: '80%'
-      }}
-    >
-      <Text>Falcon AI is typing...</Text>
+    <View style={styles.container}>
+      <Text style={styles.text}>Falcon AI is typing...</Text>
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    backgroundColor: '#111',
+    alignSelf: 'flex-start',
+    paddingHorizontal: 16,
+    paddingVertical: 12,
+    borderRadius: 18,
+    marginTop: 10,
+    marginBottom: 10,
+  },
+  text: {
+    color: '#888',
+    fontSize: 14,
+  },
+});
