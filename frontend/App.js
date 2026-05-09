@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, ScrollView } from 'react-native';
 import MessageBubble from './components/MessageBubble';
+import ModelSelector from './components/ModelSelector';
 
 export default function App() {
   const [message, setMessage] = useState('');
@@ -41,6 +42,8 @@ export default function App() {
         Falcon AI
       </Text>
 
+      <ModelSelector />
+
       <ScrollView style={{ flex: 1, paddingHorizontal: 20 }}>
         {messages.map((msg, index) => (
           <MessageBubble
@@ -60,9 +63,7 @@ export default function App() {
           alignItems: 'center'
         }}
       >
-        <TouchableOpacity
-          style={{ marginRight: 10 }}
-        >
+        <TouchableOpacity style={{ marginRight: 10 }}>
           <Text style={{ fontSize: 24 }}>📎</Text>
         </TouchableOpacity>
 
@@ -79,9 +80,7 @@ export default function App() {
           }}
         />
 
-        <TouchableOpacity
-          style={{ marginLeft: 10 }}
-        >
+        <TouchableOpacity style={{ marginLeft: 10 }}>
           <Text style={{ fontSize: 24 }}>🎤</Text>
         </TouchableOpacity>
 
